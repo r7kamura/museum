@@ -4,12 +4,14 @@
   <%= form_tag({:action => :create}, {:remote => true}) do %>
     <%= submit_tag "Save" %>
   <% end %>
+
+  <button type="button" id="clear-button">Clear</button>
 </div>
 
 <ul class="pictures">
   <% @pictures.each do |picture| %>
     <li class="picture">
-      <%= tag("img", :src => picture.data, :width => 200) %>
+    <%= tag("img", :src => picture.data, :width => 200) %>
     </li>
   <% end %>
 </ul>

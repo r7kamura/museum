@@ -72,36 +72,50 @@ var Museum = {
         self.context.moveTo(e.clientX - self.left, e.clientY - self.top);
       });
     },
+
+    clearPallete: function() {
+      this.context.clearRect(0, 0, this.canvas.width(), this.canvas.height());
+    },
+
+    copyPicture: function($img) {
+      var copy = new Image();
+      copy.src = $img.attr("src");
+
+      var self = this;
+      copy.onload = function() {
+        self.clearPallete();
+        self.context.drawImage(copy, 0, 0);
+      };
+    }
   },
 
   saveOnSubmit: function($form) {
+    var self = this;
     $form.submit(function() {
       $(this).find("#data-url").remove();
       $("<input />").attr({
         id:    "data-url",
         type:  "hidden",
         name:  "data",
-        value: Museum.pallete.canvas[0].toDataURL()
+        value: self.pallete.canvas[0].toDataURL()
       }).appendTo($(this));
     });
   },
 
   copyPictureOnClick: function($img) {
-    $img.click(function() {
-      var copy = new Image();
-      copy.src = $(this).attr("src");
-      copy.onload = function() {
-        var context = Museum.pallete.context;
-        var canvas  = Museum.pallete.canvas;
-        context.clearRect(0, 0, canvas.width(), canvas.height());
-        context.drawImage(copy, 0, 0);
-      };
-    });
+    var self = this;
+    $img.click(function() { self.pallete.copyPicture($(this)) });
+  },
+
+  clearOnClick: function($button) {
+    var self = this;
+    $button.click(function() { self.pallete.clearPallete() });
   }
 };
 
 $(function() {
-  Museum.pallete.init($("#canvas"), { color: "red" });
+  Museum.pallete.init($("#canvas"));
   Museum.saveOnSubmit($(".pallete form"));
+  Museum.clearOnClick($("#clear-button"));
   Museum.copyPictureOnClick($(".picture img"));
 });
