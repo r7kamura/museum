@@ -42,10 +42,10 @@ var Museum = {
       this.context.strokeStyle = opt.color;
 
       var canvas = this.canvas;
-      this.context.prevStack = [];
-      this.context.savePrev  = function() {
-        var prev = this.getImageData(0, 0, canvas.width(), canvas.height());
-        this.prevStack.push(prev);
+      this.context.histories = [];
+      this.context.save = function() {
+        var history = this.getImageData(0, 0, canvas.width(), canvas.height());
+        this.histories.push(history);
       };
     },
 
@@ -75,9 +75,9 @@ var Museum = {
       var self = this;
       this.canvas.mousedown(function(e) {
         self.isDowned = true;
+        self.context.save();
         self.context.beginPath();
         self.context.moveTo(e.clientX - self.left, e.clientY - self.top);
-        self.context.savePrev();
       });
     },
 
@@ -93,8 +93,9 @@ var Museum = {
     },
 
     undo: function() {
-      var prev = this.context.prevStack.pop();
-      if (prev) { this.context.putImageData(prev, 0, 0) }
+      var context = this.context;
+      var history = context.histories.pop();
+      if (history) { context.putImageData(history, 0, 0) }
     },
 
     overwrite: function(image) {
@@ -133,6 +134,13 @@ var Museum = {
   undoOnClick: function($button) {
     var self = this;
     $button.click(function() { self.pallete.undo() });
+  },
+
+  undoOnKey: function() {
+    var self = this;
+    $(window).keydown(function(e) {
+      if (e.ctrlKey && e.keyCode == 90) { self.pallete.undo() }
+    });
   }
 };
 
@@ -141,5 +149,6 @@ $(function() {
   Museum.saveOnSubmit($(".pallete form"));
   Museum.clearOnClick($("#clear-button"));
   Museum.undoOnClick($("#undo-button"));
+  Museum.undoOnKey();
   Museum.copyOnClick($(".copy-button"));
 });
