@@ -1,5 +1,5 @@
-# museum
-Slide Hand Drawing Tool using HTML5
+# Museum
+Hand Drawing Slide Tool using HTML5
 
 
 ## Require
