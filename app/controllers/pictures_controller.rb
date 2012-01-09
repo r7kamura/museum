@@ -1,9 +1,10 @@
 class PicturesController < ApplicationController
   def index
-    @pictures = Picture.order("id DESC")
+    @pictures = Picture.order("id DESC").limit(20)
   end
 
-  def new
+  def show
+    @picture = Picture.find(params[:id])
   end
 
   def create

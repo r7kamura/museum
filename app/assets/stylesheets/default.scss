@@ -7,6 +7,11 @@
   }
 }
 
+@mixin radius($px) {
+  border-radius: $px;
+  -moz-border-radius: $px;
+  -webkit-border-radius: $px;
+}
 
 /* end mixin */
 /* --------- */
@@ -27,6 +32,7 @@ body {
 }
 
 canvas {
+  background: white;
   border: solid 1px #ccc;
 }
 
@@ -34,20 +40,9 @@ canvas {
   @include clearfix;
 
   .picture {
-    background: #eee;
-    border: solid 1px #ddd;
-    border-radius: 15px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
     float: left;
     list-style-type: none;
     margin: 20px 20px 0 0;
-    padding: 15px;
-
-    img {
-      background: white;
-      display: block;
-    }
 
     .copy-button {
       color: #333;
@@ -57,4 +52,16 @@ canvas {
       }
     }
   }
+}
+
+.frame {
+  background: #eee;
+  border: solid 1px #ccc;
+  padding: 15px;
+  @include radius(15px);
+}
+
+.picture img {
+  background: white;
+  display: block;
 }
