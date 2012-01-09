@@ -6,5 +6,6 @@ class PicturesController < ApplicationController
   end
 
   def create
+    render :text => "OK"
   end
 end

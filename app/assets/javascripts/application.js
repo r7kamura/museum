@@ -1,7 +1,7 @@
-// This is a manifest file that'll be compiled into including all the files listed below.
-// Add new JavaScript/Coffee code in separate files in this directory and they'll automatically
+// This is a manifest file that"ll be compiled into including all the files listed below.
+// Add new JavaScript/Coffee code in separate files in this directory and they"ll automatically
 // be included in the compiled file accessible from http://example.com/assets/application.js
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// It"s not advisable to add code directly here, but if you do, it"ll appear at the bottom of the
 // the compiled file.
 //
 //= require jquery
@@ -10,28 +10,36 @@
 
 var Museum = {
   pallete: {
-    init: function(canvas) {
-      this.initCanvas(canvas);
-      this.initContext(canvas);
+    init: function(canvas, opt) {
+      this.initCanvas(canvas, opt);
+      this.initContext(opt);
       this.onMouseDown();
       this.onMouseMove();
       this.onMouseUp();
     },
 
-    initCanvas: function(canvas) {
-      canvas.get(0).width  = window.innerWidth  - 30;
-      canvas.get(0).height = window.innerHeight - 30;
+    initCanvas: function(canvas, opt) {
+      opt = $.extend({
+        width:  window.innerWidth - 20,
+        height: 600
+      }, opt);
+      canvas[0].width  = opt.width;
+      canvas[0].height = opt.height;
 
-      var canvasPos = canvas.get(0).getBoundingClientRect();
+      var canvasPos = canvas[0].getBoundingClientRect();
       this.left   = canvasPos.left;
       this.top    = canvasPos.top;
       this.canvas = canvas;
     },
 
-    initContext: function() {
-      this.context = this.canvas.get(0).getContext('2d');
-      this.context.lineWidth   = 5;
-      this.context.strokeStyle = '#333';
+    initContext: function(opt) {
+      opt = $.extend({
+        color: "#333",
+        lineWidth: 5
+      }, opt);
+      this.context = this.canvas[0].getContext("2d");
+      this.context.lineWidth   = opt.lineWidth;
+      this.context.strokeStyle = opt.color;
     },
 
     isDowned: false,
@@ -64,9 +72,22 @@ var Museum = {
         self.context.moveTo(e.clientX - self.left, e.clientY - self.top);
       });
     }
+  },
+
+  onSaveButton: function() {
+    $(".pallete form").submit(function() {
+      $(this).find("#data").remove();
+      $("<input />").attr({
+        id:    "data",
+        type:  "hidden",
+        name:  "data",
+        value: Museum.pallete.canvas[0].toDataURL()
+      }).appendTo($(this));
+    });
   }
 };
 
 $(function() {
-  Museum.pallete.init($('#canvas'));
+  Museum.pallete.init($("#canvas"), { color: "red" });
+  Museum.onSaveButton();
 });

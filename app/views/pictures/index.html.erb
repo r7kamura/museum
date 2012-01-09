@@ -1,1 +1,7 @@
-<canvas id="canvas" width="800" height="600"></canvas>
+<div class="pallete">
+  <canvas id="canvas" width="800" height="600"></canvas>
+
+  <%= form_tag({:action => :create}, {:remote => true}) do %>
+    <%= submit_tag "Save" %>
+  <% end %>
+</div>
