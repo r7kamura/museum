@@ -5,3 +5,11 @@
     <%= submit_tag "Save" %>
   <% end %>
 </div>
+
+<ul>
+  <% @pictures.each do |picture| %>
+    <li>
+      <%= tag("img", :src => picture.data, :width => 300) %>
+    </li>
+  <% end %>
+</ul>

@@ -20,7 +20,7 @@ var Museum = {
 
     initCanvas: function(canvas, opt) {
       opt = $.extend({
-        width:  window.innerWidth - 20,
+        width:  canvas.parent().innerWidth(),
         height: 600
       }, opt);
       canvas[0].width  = opt.width;
