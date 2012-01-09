@@ -10,26 +10,26 @@
 
 var Museum = {
   pallete: {
-    init: function(canvas, opt) {
-      this.initCanvas(canvas, opt);
+    init: function($canvas, opt) {
+      this.initCanvas($canvas, opt);
       this.initContext(opt);
       this.onMouseDown();
       this.onMouseMove();
       this.onMouseUp();
     },
 
-    initCanvas: function(canvas, opt) {
+    initCanvas: function($canvas, opt) {
       opt = $.extend({
-        width:  canvas.parent().innerWidth(),
+        width:  $canvas.parent().innerWidth(),
         height: 600
       }, opt);
-      canvas[0].width  = opt.width;
-      canvas[0].height = opt.height;
+      $canvas[0].width  = opt.width;
+      $canvas[0].height = opt.height;
 
-      var canvasPos = canvas[0].getBoundingClientRect();
+      var canvasPos = $canvas[0].getBoundingClientRect();
       this.left   = canvasPos.left;
       this.top    = canvasPos.top;
-      this.canvas = canvas;
+      this.canvas = $canvas;
     },
 
     initContext: function(opt) {
@@ -71,23 +71,37 @@ var Museum = {
         self.context.beginPath();
         self.context.moveTo(e.clientX - self.left, e.clientY - self.top);
       });
-    }
+    },
   },
 
-  onSaveButton: function() {
-    $(".pallete form").submit(function() {
-      $(this).find("#data").remove();
+  saveOnSubmit: function($form) {
+    $form.submit(function() {
+      $(this).find("#data-url").remove();
       $("<input />").attr({
-        id:    "data",
+        id:    "data-url",
         type:  "hidden",
         name:  "data",
         value: Museum.pallete.canvas[0].toDataURL()
       }).appendTo($(this));
+    });
+  },
+
+  copyPictureOnClick: function($img) {
+    $img.click(function() {
+      var copy = new Image();
+      copy.src = $(this).attr("src");
+      copy.onload = function() {
+        var context = Museum.pallete.context;
+        var canvas  = Museum.pallete.canvas;
+        context.clearRect(0, 0, canvas.width(), canvas.height());
+        context.drawImage(copy, 0, 0);
+      };
     });
   }
 };
 
 $(function() {
   Museum.pallete.init($("#canvas"), { color: "red" });
-  Museum.onSaveButton();
+  Museum.saveOnSubmit($(".pallete form"));
+  Museum.copyPictureOnClick($(".picture img"));
 });

@@ -1,12 +1,48 @@
+@mixin clearfix {
+  width:100%;
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+
+/* end mixin */
+/* --------- */
+/* begin css */
+
+
 * {
   margin: 0;
   padding: 0;
 }
 
+img {
+  border: none;
+}
+
 body {
-  padding: 10px;
+  padding: 20px;
 }
 
 canvas {
   border: solid 1px #ccc;
+}
+
+.pictures {
+  @include clearfix;
+
+  .picture {
+    background: #eee;
+    border: solid 1px #ddd;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    float: left;
+    list-style-type: none;
+    margin: 20px 20px 0 0;
+    padding: 15px;
+    img { background: white; }
+  }
 }

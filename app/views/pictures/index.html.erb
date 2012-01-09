@@ -6,10 +6,10 @@
   <% end %>
 </div>
 
-<ul>
+<ul class="pictures">
   <% @pictures.each do |picture| %>
-    <li>
-      <%= tag("img", :src => picture.data, :width => 300) %>
+    <li class="picture">
+      <%= tag("img", :src => picture.data, :width => 200) %>
     </li>
   <% end %>
 </ul>
