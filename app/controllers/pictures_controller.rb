@@ -8,7 +8,7 @@ class PicturesController < ApplicationController
   end
 
   def create
-    Picture.create(:data => params[:data])
-    render :nothing => true
+    @picture = Picture.create(:data => params[:data])
+    render :layout => false
   end
 end

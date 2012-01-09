@@ -1,0 +1,6 @@
+<li class="picture frame">
+  <%= link_to picture do %>
+    <%= tag("img", :src => picture.data, :height => 150, :width => 200) %>
+  <% end %>
+  <%= link_to " Copy", "#", :class => "copy-button" %>
+</li>

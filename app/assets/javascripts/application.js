@@ -113,14 +113,20 @@ var Museum = {
   saveOnSubmit: function($form) {
     var self = this;
     $form.submit(function() {
+      var data = self.pallete.canvas[0].toDataURL();
       $(this).find("#data-url").remove();
       $("<input />").attr({
         id:    "data-url",
         type:  "hidden",
         name:  "data",
-        value: self.pallete.canvas[0].toDataURL()
+        value: data
       }).appendTo($(this));
     });
+
+    $form.bind("ajax:success", function(event, data) {
+      $(data).insertBefore($(".picture").eq(0));
+    });
+
   },
 
   copyOnClick: function($button) {
@@ -164,11 +170,11 @@ var Museum = {
   changeColorOnClick: function($color) {
     var self = this;
     $color.click(function() {
-      var color = $(this).css('background-color');
+      var color = $(this).css("background-color");
       self.pallete.context.strokeStyle = color;
 
-      $color.removeClass('selected');
-      $(this).addClass('selected');
+      $color.removeClass("selected");
+      $(this).addClass("selected");
     });
   }
 };

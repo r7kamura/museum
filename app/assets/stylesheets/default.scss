@@ -37,8 +37,6 @@ canvas {
 }
 
 .pictures {
-  @include clearfix;
-
   .picture {
     float: left;
     list-style-type: none;
@@ -47,11 +45,10 @@ canvas {
     .copy-button {
       color: #333;
       font-size: 80%;
-      &:before {
-        content: "\27f3";
-      }
+      &:before { content: "\27f3" }
     }
   }
+  @include clearfix;
 }
 
 .frame {
@@ -95,7 +92,6 @@ canvas {
     margin-right: 10px;
     width: 50px;
     @include radius(50px);
-
     &:hover  {
       background: #ccc;
       border: double 3px #eee;

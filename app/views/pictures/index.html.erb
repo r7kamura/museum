@@ -7,7 +7,9 @@
     <table>
       <tr>
         <td>
-          <%= form_tag({:action => :create}, {:remote => true, :id => "save-form"}) do %>
+          <%= form_tag(
+            {:action => :create},
+            {:remote => true, "data-type" => "html", :id => "save-form"}) do %>
             <%= submit_tag "Save", :class => "button" %>
           <% end %>
         </td>
@@ -44,11 +46,6 @@
 
 <ul class="pictures">
   <% @pictures.each do |picture| %>
-    <li class="picture frame">
-      <%= link_to picture do %>
-        <%= tag("img", :src => picture.data, :height => 150, :width => 200) %>
-      <% end %>
-      <%= link_to " Copy", "#", :class => "copy-button" %>
-    </li>
+    <%= render :partial => "thumbnail", :locals => { :picture => picture } %>
   <% end %>
 </ul>
