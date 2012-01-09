@@ -16,3 +16,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :production do
+  gem 'pg'                  # for Heroku
+  gem 'therubyracer-heroku' # for Heroku
+end
