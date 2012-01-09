@@ -11,7 +11,10 @@
 <ul class="pictures">
   <% @pictures.each do |picture| %>
     <li class="picture">
-    <%= tag("img", :src => picture.data, :width => 200) %>
+      <%= link_to picture do %>
+        <%= tag("img", :src => picture.data, :width => 200) %>
+      <% end %>
+      <%= link_to " Copy", "#", :class => "copy-button" %>
     </li>
   <% end %>
 </ul>

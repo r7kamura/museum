@@ -102,9 +102,13 @@ var Museum = {
     });
   },
 
-  copyPictureOnClick: function($img) {
+  copyPictureOnClick: function($button) {
     var self = this;
-    $img.click(function() { self.pallete.copyPicture($(this)) });
+    $button.click(function() {
+      var $img = $(this).closest(".picture").find("img");
+      self.pallete.copyPicture($img);
+      return false;
+    });
   },
 
   clearOnClick: function($button) {
@@ -117,5 +121,5 @@ $(function() {
   Museum.pallete.init($("#canvas"));
   Museum.saveOnSubmit($(".pallete form"));
   Museum.clearOnClick($("#clear-button"));
-  Museum.copyPictureOnClick($(".picture img"));
+  Museum.copyPictureOnClick($(".copy-button"));
 });

@@ -43,6 +43,18 @@ canvas {
     list-style-type: none;
     margin: 20px 20px 0 0;
     padding: 15px;
-    img { background: white; }
+
+    img {
+      background: white;
+      display: block;
+    }
+
+    .copy-button {
+      color: #333;
+      font-size: 80%;
+      &:before {
+        content: "\27f3";
+      }
+    }
   }
 }
