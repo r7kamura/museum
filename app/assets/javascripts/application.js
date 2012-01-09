@@ -40,6 +40,13 @@ var Museum = {
       this.context = this.canvas[0].getContext("2d");
       this.context.lineWidth   = opt.lineWidth;
       this.context.strokeStyle = opt.color;
+
+      var canvas = this.canvas;
+      this.context.prevStack = [];
+      this.context.savePrev  = function() {
+        var prev = this.getImageData(0, 0, canvas.width(), canvas.height());
+        this.prevStack.push(prev);
+      };
     },
 
     isDowned: false,
@@ -47,7 +54,7 @@ var Museum = {
     onMouseMove: function() {
       var self = this;
       $(window).mousemove(function(e) {
-        if (!self.isDowned) { return };
+        if (!self.isDowned) { return }
         self.context.lineTo(e.clientX - self.left, e.clientY - self.top);
         self.context.stroke();
       });
@@ -56,11 +63,11 @@ var Museum = {
     onMouseUp: function(canvas, context) {
       var self = this;
       $(window).mouseup(function(e) {
-        if (!self.isDowned) { return };
+        if (!self.isDowned) { return }
         self.context.lineTo(e.clientX - self.left, e.clientY - self.top);
         self.context.stroke();
         self.context.closePath();
-        self.isDowned = false
+        self.isDowned = false;
       });
     },
 
@@ -70,22 +77,29 @@ var Museum = {
         self.isDowned = true;
         self.context.beginPath();
         self.context.moveTo(e.clientX - self.left, e.clientY - self.top);
+        self.context.savePrev();
       });
     },
 
-    clearPallete: function() {
+    clear: function() {
       this.context.clearRect(0, 0, this.canvas.width(), this.canvas.height());
     },
 
-    copyPicture: function($img) {
+    copy: function($img) {
+      var self = this;
       var copy = new Image();
       copy.src = $img.attr("src");
+      copy.onload = function() { self.overwrite(copy) };
+    },
 
-      var self = this;
-      copy.onload = function() {
-        self.clearPallete();
-        self.context.drawImage(copy, 0, 0);
-      };
+    undo: function() {
+      var prev = this.context.prevStack.pop();
+      if (prev) { this.context.putImageData(prev, 0, 0) }
+    },
+
+    overwrite: function(image) {
+      this.clear();
+      this.context.drawImage(image, 0, 0);
     }
   },
 
@@ -102,18 +116,23 @@ var Museum = {
     });
   },
 
-  copyPictureOnClick: function($button) {
+  copyOnClick: function($button) {
     var self = this;
     $button.click(function() {
       var $img = $(this).closest(".picture").find("img");
-      self.pallete.copyPicture($img);
+      self.pallete.copy($img);
       return false;
     });
   },
 
   clearOnClick: function($button) {
     var self = this;
-    $button.click(function() { self.pallete.clearPallete() });
+    $button.click(function() { self.pallete.clear() });
+  },
+
+  undoOnClick: function($button) {
+    var self = this;
+    $button.click(function() { self.pallete.undo() });
   }
 };
 
@@ -121,5 +140,6 @@ $(function() {
   Museum.pallete.init($("#canvas"));
   Museum.saveOnSubmit($(".pallete form"));
   Museum.clearOnClick($("#clear-button"));
-  Museum.copyPictureOnClick($(".copy-button"));
+  Museum.undoOnClick($("#undo-button"));
+  Museum.copyOnClick($(".copy-button"));
 });
