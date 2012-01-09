@@ -72,6 +72,17 @@ canvas {
   padding: 10px 0;
 
   .slider { padding-top: 6px }
+  .slider-value { padding-right: 10px }
+
+  .colors {
+    .color {
+      cursor: pointer;
+      display: inline-block;
+      height: 30px;
+      width: 30px;
+      @include radius(15px);
+    }
+  }
 
   .button {
     border: solid 4px #aaa;

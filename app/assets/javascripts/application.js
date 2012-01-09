@@ -148,7 +148,18 @@ var Museum = {
     $slider.change(function() {
       var lineWidth = $(this).val();
       self.pallete.context.lineWidth = lineWidth;
-      $sliderValue.text(lineWidth);
+
+      var str = lineWidth;
+      if (str.length == 1) { str = "0" + str }
+      $sliderValue.text(str);
+    });
+  },
+
+  changeColorOnClick: function($color) {
+    var self = this;
+    $color.click(function() {
+      var color = $(this).css('background-color');
+      self.pallete.context.strokeStyle = color;
     });
   }
 };
@@ -164,4 +175,7 @@ $(function() {
     $("#pen-width-slider"),
     $("#pen-width-slider-value")
   );
+
+  Museum.changeColorOnClick($(".pallete .color"));
+  $(".pallete .color:first-child").click();
 });
