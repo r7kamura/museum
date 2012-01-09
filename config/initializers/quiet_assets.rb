@@ -1,0 +1,10 @@
+# #2639: Served asset log messages are pretty annoying!
+# Issues - rails/rails - GitHub
+# https://github.com/rails/rails/issues/2639#issuecomment-2252326
+Rails.application.assets.logger = Logger.new('/dev/null')
+Rails::Rack::Logger.class_eval do
+  def before_dispatch_with_quiet_assets(env)
+    before_dispatch_without_quiet_assets(env) unless env['PATH_INFO'].index("/assets/") == 0
+  end
+  alias_method_chain :before_dispatch, :quiet_assets
+end
