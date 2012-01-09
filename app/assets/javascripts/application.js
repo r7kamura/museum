@@ -141,6 +141,15 @@ var Museum = {
     $(window).keydown(function(e) {
       if (e.ctrlKey && e.keyCode == 90) { self.pallete.undo() }
     });
+  },
+
+  trackOnChangeSlide: function($slider, $sliderValue) {
+    var self = this;
+    $slider.change(function() {
+      var lineWidth = $(this).val();
+      self.pallete.context.lineWidth = lineWidth;
+      $sliderValue.text(lineWidth);
+    });
   }
 };
 
@@ -149,6 +158,10 @@ $(function() {
   Museum.saveOnSubmit($("#save-form"));
   Museum.clearOnClick($("#clear-button"));
   Museum.undoOnClick($("#undo-button"));
-  Museum.undoOnKey();
   Museum.copyOnClick($(".copy-button"));
+  Museum.undoOnKey();
+  Museum.trackOnChangeSlide(
+    $("#pen-width-slider"),
+    $("#pen-width-slider-value")
+  );
 });

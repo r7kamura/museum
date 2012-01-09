@@ -68,20 +68,27 @@ canvas {
   margin: 0 auto;
 }
 
-.pallete .buttons {
-  @include clearfix;
+.pallete {
+  padding: 10px 0;
+
+  .slider { padding-top: 6px }
 
   .button {
-    border: solid 3px #ccc;
+    border: solid 4px #aaa;
     cursor: pointer;
     display: block;
-    float: left;
     height: 50px;
-    margin: 10px 10px 0 0;
+    margin-right: 10px;
     width: 50px;
     @include radius(50px);
 
-    &:hover  { background: #aaa; border: double 3px #eee; }
-    &:active { background: #ccc; border: solid 3px #ccc; }
+    &:hover  {
+      background: #aaa;
+      border: double 3px #eee;
+    }
+    &:active {
+      background: #aaa;
+      border: solid 3px #ccc;
+    }
   }
 }
