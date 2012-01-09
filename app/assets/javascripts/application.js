@@ -21,7 +21,7 @@ var Museum = {
     initCanvas: function($canvas, opt) {
       opt = $.extend({
         width:  $canvas.parent().innerWidth(),
-        height: 600
+        height: $canvas.parent().innerWidth() * 3 / 4,
       }, opt);
       $canvas[0].width  = opt.width;
       $canvas[0].height = opt.height;
@@ -35,9 +35,11 @@ var Museum = {
     initContext: function(opt) {
       opt = $.extend({
         color: "#333",
+        lineCap: "round",
         lineWidth: 5
       }, opt);
       this.context = this.canvas[0].getContext("2d");
+      this.context.lineCap     = opt.lineCap;
       this.context.lineWidth   = opt.lineWidth;
       this.context.strokeStyle = opt.color;
 
