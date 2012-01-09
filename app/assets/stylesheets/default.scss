@@ -65,4 +65,23 @@ canvas {
   background: white;
   border: solid 1px #ccc;
   display: block;
+  margin: 0 auto;
+}
+
+.pallete .buttons {
+  @include clearfix;
+
+  .button {
+    border: solid 3px #ccc;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 50px;
+    margin: 10px 10px 0 0;
+    width: 50px;
+    @include radius(50px);
+
+    &:hover  { background: #aaa; border: double 3px #eee; }
+    &:active { background: #ccc; border: solid 3px #ccc; }
+  }
 }

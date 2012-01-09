@@ -146,7 +146,7 @@ var Museum = {
 
 $(function() {
   Museum.pallete.init($("#canvas"));
-  Museum.saveOnSubmit($(".pallete form"));
+  Museum.saveOnSubmit($("#save-form"));
   Museum.clearOnClick($("#clear-button"));
   Museum.undoOnClick($("#undo-button"));
   Museum.undoOnKey();

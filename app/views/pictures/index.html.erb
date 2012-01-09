@@ -1,13 +1,16 @@
 <div class="frame">
-  <div class="pallete">
+  <div>
     <canvas id="canvas" width="800" height="600"></canvas>
+  </div>
 
-    <%= form_tag({:action => :create}, {:remote => true}) do %>
-      <%= submit_tag "Save" %>
-    <% end %>
-
-    <button type="button" id="clear-button">Clear</button>
-    <button type="button" id="undo-button">Undo</button>
+  <div class="pallete">
+    <div class="buttons">
+      <%= form_tag({:action => :create}, {:remote => true, :id => "save-form"}) do %>
+        <%= submit_tag "Save", :class => "button" %>
+      <% end %>
+      <button class="button" type="button" id="clear-button">Clear</button>
+      <button class="button" type="button" id="undo-button">Undo</button>
+    </div>
   </div>
 </div>
 
