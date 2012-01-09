@@ -76,15 +76,18 @@ canvas {
 
   .colors {
     .color {
+      border: solid 3px #eee;
       cursor: pointer;
       display: inline-block;
       height: 30px;
       width: 30px;
-      @include radius(15px);
+      @include radius(18px);
+      &.selected { border: double 3px red }
     }
   }
 
   .button {
+    background-color: #FFDB4F;
     border: solid 4px #aaa;
     cursor: pointer;
     display: block;
@@ -94,11 +97,11 @@ canvas {
     @include radius(50px);
 
     &:hover  {
-      background: #aaa;
+      background: #ccc;
       border: double 3px #eee;
     }
     &:active {
-      background: #aaa;
+      background: #ccc;
       border: solid 3px #ccc;
     }
   }

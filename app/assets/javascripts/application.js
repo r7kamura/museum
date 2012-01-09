@@ -47,6 +47,7 @@ var Museum = {
         var history = this.getImageData(0, 0, canvas.width(), canvas.height());
         this.histories.push(history);
       };
+      this.context.save();
     },
 
     isDowned: false,
@@ -89,7 +90,10 @@ var Museum = {
       var self = this;
       var copy = new Image();
       copy.src = $img.attr("src");
-      copy.onload = function() { self.overwrite(copy) };
+      copy.onload = function() {
+        self.overwrite(copy);
+        self.context.save();
+      };
     },
 
     undo: function() {
@@ -160,6 +164,9 @@ var Museum = {
     $color.click(function() {
       var color = $(this).css('background-color');
       self.pallete.context.strokeStyle = color;
+
+      $color.removeClass('selected');
+      $(this).addClass('selected');
     });
   }
 };
