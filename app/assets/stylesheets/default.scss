@@ -36,6 +36,8 @@ body {
 canvas {
   background: white;
   border: solid 1px #ccc;
+  display: block;
+  margin: 0 auto;
 }
 
 .pictures {
@@ -80,7 +82,7 @@ canvas {
 }
 
 .pallete {
-  padding: 10px 0;
+  padding-top: 10px;
 
   .slider { padding-top: 6px }
   .slider-value { padding-right: 10px }

@@ -19,9 +19,17 @@ var Museum = {
     },
 
     initCanvas: function($canvas, opt) {
+      var width  = $canvas.parent().innerWidth();
+      var height = $canvas.parent().innerWidth() * 3 / 4;
+      var margin = 150;
+      if (height > window.innerHeight - margin) {
+        height = window.innerHeight - margin;
+        width  = height * 4 / 3;
+      }
+
       opt = $.extend({
-        width:  $canvas.parent().innerWidth(),
-        height: $canvas.parent().innerWidth() * 3 / 4,
+        width:  width,
+        height: height,
       }, opt);
       $canvas[0].width  = opt.width;
       $canvas[0].height = opt.height;
