@@ -2,5 +2,8 @@
   <%= link_to picture do %>
     <%= tag("img", :src => picture.data, :height => 135, :width => 181) %>
   <% end %>
-  <%= link_to " Copy", "#", :class => "copy-button" %>
+  <p>
+    <%= link_to " Copy", "#", :class => "copy-button" %>
+    <time><%= time_ago_in_words(picture.created_at) %> ago</time>
+  </p>
 </li>

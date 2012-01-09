@@ -43,14 +43,24 @@ canvas {
     float: left;
     list-style-type: none;
     margin: 20px 20px 0 0;
-
-    .copy-button {
-      color: #333;
-      font-size: 80%;
-      &:before { content: "\27f3" }
-    }
-
     &:nth-child(4n) { margin-right: 0 }
+
+    p {
+      position: relative;
+      .copy-button {
+        color: #333;
+        font-size: 70%;
+        &:before { content: "\27f3" }
+      }
+
+      time {
+        color: #666;
+        font-size: 70%;
+        position: absolute;
+        right: 0;
+        top: 5px;
+      }
+    }
   }
   @include clearfix;
 }
