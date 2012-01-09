@@ -5,7 +5,7 @@ gem 'mysql2'
 gem 'jquery-rails'
 
 group :development do
-  gem 'rspec-rails', require: nil
+  gem 'rspec-rails', :require => nil
   gem 'pry'
   gem 'awesome_print'
 end

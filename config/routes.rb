@@ -1,4 +1,6 @@
 Museum::Application.routes.draw do
+  root :to => "pictures#index"
+
   resources :pictures
 
   # The priority is based upon order of creation:
