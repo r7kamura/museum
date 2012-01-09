@@ -29,6 +29,8 @@ img {
 
 body {
   padding: 20px;
+  width: 920px;
+  margin: 0 auto;
 }
 
 canvas {
@@ -47,6 +49,8 @@ canvas {
       font-size: 80%;
       &:before { content: "\27f3" }
     }
+
+    &:nth-child(4n) { margin-right: 0 }
   }
   @include clearfix;
 }
