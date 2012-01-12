@@ -7,8 +7,11 @@ class PicturesController < ApplicationController
     @picture = Picture.find(params[:id])
   end
 
+  def new
+  end
+
   def create
     @picture = Picture.create(:data => params[:data])
-    render :layout => false
+    redirect_to :root
   end
 end
