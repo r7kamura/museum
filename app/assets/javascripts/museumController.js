@@ -2,7 +2,10 @@ var MuseumController = {};
 
 MuseumController['/pictures/new'] = function() {
   Museum.pallete.init($("#canvas"));
-  Museum.saveOnSubmit($("#save-form"));
+  Museum.saveOnSubmit({
+    canvas: $("canvas"),
+    form: $("#save-form")
+  });
   Museum.clearOnClick($("#clear-button"));
   Museum.copyOnClick($(".copy-button"));
   Museum.undoOnClick($("#undo-button"));

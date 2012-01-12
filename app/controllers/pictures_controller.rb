@@ -11,7 +11,7 @@ class PicturesController < ApplicationController
   end
 
   def create
-    @picture = Picture.create(:data => params[:data])
+    Picture.create([ params[:data] ].flatten.map { |data| {:data => data} })
     redirect_to :root
   end
 end

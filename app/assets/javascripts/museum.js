@@ -111,17 +111,19 @@ var Museum = {
     }
   },
 
-  saveOnSubmit: function($form) {
+  saveOnSubmit: function(args) {
+    var $canvas = args.canvas;
+    var $form   = args.form;
     var self = this;
     $form.submit(function() {
-      var data = self.pallete.canvas[0].toDataURL();
-      $(this).find("#data-url").remove();
-      $("<input />").attr({
-        id:    "data-url",
-        type:  "hidden",
-        name:  "data",
-        value: data
-      }).appendTo($(this));
+      $canvas.each(function() {
+        $("<input />").attr({
+          id:    "data-url",
+          type:  "hidden",
+          name:  "data",
+          value: this.toDataURL()
+        }).appendTo($form);
+      });
     });
   },
 
