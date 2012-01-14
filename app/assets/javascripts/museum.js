@@ -29,9 +29,9 @@ var Museum = {
       $canvas[0].height = width * 3 / 4;
 
       var canvasPos = $canvas[0].getBoundingClientRect();
-      this.left    = canvasPos.left;
-      this.top     = canvasPos.top;
-      this.canvas  = $canvas;
+      this.left     = canvasPos.left;
+      this.top      = canvasPos.top;
+      this.canvas   = $canvas;
       this.canvases = [$canvas];
     },
 
@@ -59,6 +59,31 @@ var Museum = {
       this.context = context;
     },
 
+    // FIXME merge with init()
+    addCanvas: function() {
+      var $canvas    = $('<canvas width="800" height="600"></canvas>')
+      var $last      = $(this.canvases).last();
+      $canvas.width  = $last[0].width;
+      $canvas.height = $last[0].height;
+      $canvas.insertAfter($last);
+
+      var context = $canvas[0].getContext('2d');
+      context.lineCap     = this.context.lineCap;
+      context.lineWidth   = this.context.lineWidth;
+      context.strokeStyle = this.context.color;
+
+      this.context = context;
+      this.canvas  = $canvas;
+      this.canvases.push($canvas);
+
+      // FIXME
+      $('#canvas').replaceWith($canvas);
+      this.appendThumbnail({
+        container: $('.thumbnails'),
+        origin:    $('.thumbnail-clone li')
+      })
+    },
+
     appendThumbnail: function(args) {
       var $origin    = args.origin;
       var $container = args.container;
@@ -67,7 +92,7 @@ var Museum = {
     },
 
     updateThumbnails: function($imgs) {
-      this.imgs = this.imgs || $imgs;
+      this.imgs = $imgs || this.imgs;
       for (var i = 0; i < this.imgs.length; i++) {
         var width  = this.imgs[i].width;
         var height = this.imgs[i].height;
@@ -104,7 +129,7 @@ var Museum = {
 
     onMouseDown: function(canvas, context) {
       var self = this;
-      this.canvas.mousedown(function(e) {
+      $(window).mousedown(function(e) {
         self.isDowned = true;
         self.context.save();
         self.context.beginPath();

@@ -18,7 +18,7 @@ MuseumDispatcher['/pictures/new'] = function() {
   );
   Museum.changeColorOnClick($('.pallete .color'));
 
-  // TODO move definition into pallete
+  // FIXME move definition into pallete
   Museum.pallete.appendThumbnail({
     container: $('.thumbnails'),
     origin:    $('.thumbnail-clone li')
