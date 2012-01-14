@@ -38,7 +38,29 @@ canvas {
   border: solid 1px #ccc;
   cursor: crosshair;
   display: block;
-  margin: 0 auto;
+  width: 100%;
+}
+
+.container {
+  @include clearfix;
+  .canvas-box, .side-box { float: left }
+  overflow: hidden;
+
+  position: relative;
+  .side-box {
+    width: 200px;
+    background: white;
+    border: solid 1px #ccc;
+    margin-right: 20px;
+    position: absolute;
+  }
+  .canvas-box {
+    padding-left: 220px;
+  }
+}
+
+.thumbnail-clone {
+  display: none;
 }
 
 .pictures {

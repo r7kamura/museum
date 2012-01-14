@@ -1,7 +1,8 @@
 var Museum = {
   pallete: {
-    canvas:  undefined,
-    context: undefined,
+    canvas:   undefined,
+    canvases: undefined,
+    context:  undefined,
 
     init: function($canvas, opt) {
       this.initCanvas($canvas, opt);
@@ -12,45 +13,70 @@ var Museum = {
     },
 
     initCanvas: function($canvas, opt) {
-      var width  = $canvas.parent().innerWidth();
-      var height = $canvas.parent().innerWidth() * 3 / 4;
-      var margin = 150;
-      if (height > window.innerHeight - margin) {
-        height = window.innerHeight - margin;
-        width  = height * 4 / 3;
+      var width = opt.width; // canvas size
+
+      if (!width) {
+        width  = $canvas.parent().innerWidth();
+        var height = width * 3 / 4;
+        var margin = 150;
+        if (height > window.innerHeight - margin) {
+          height = window.innerHeight - margin;
+          width  = height * 4 / 3;
+        }
       }
 
-      opt = $.extend({
-        width:  width,
-        height: height,
-      }, opt);
-      $canvas[0].width  = opt.width;
-      $canvas[0].height = opt.height;
+      $canvas[0].width  = width;
+      $canvas[0].height = width * 3 / 4;
 
       var canvasPos = $canvas[0].getBoundingClientRect();
-      this.left   = canvasPos.left;
-      this.top    = canvasPos.top;
-      this.canvas = $canvas;
+      this.left    = canvasPos.left;
+      this.top     = canvasPos.top;
+      this.canvas  = $canvas;
+      this.canvases = [$canvas];
     },
 
     initContext: function(opt) {
       opt = $.extend({
-        color: "#333",
-        lineCap: "round",
-        lineWidth: 5
+        color: "#333",    // pen color
+        lineCap: "round", // pen shape
+        lineWidth: 5      // pen width
       }, opt);
-      this.context = this.canvas[0].getContext("2d");
-      this.context.lineCap     = opt.lineCap;
-      this.context.lineWidth   = opt.lineWidth;
-      this.context.strokeStyle = opt.color;
+
+      var context = this.canvas[0].getContext("2d");
+      context.lineCap     = opt.lineCap;
+      context.lineWidth   = opt.lineWidth;
+      context.strokeStyle = opt.color;
 
       var canvas = this.canvas;
-      this.context.histories = [];
-      this.context.save = function() {
-        var history = this.getImageData(0, 0, canvas.width(), canvas.height());
-        this.histories.push(history);
+      context.histories = [];
+      context.save = function() {
+        this.histories.push(
+          this.getImageData(0, 0, canvas.width(), canvas.height())
+        );
       };
-      this.context.save();
+      context.save();
+
+      this.context = context;
+    },
+
+    appendThumbnail: function(args) {
+      var $origin    = args.origin;
+      var $container = args.container;
+
+      $origin.clone().appendTo($container);
+    },
+
+    updateThumbnails: function($imgs) {
+      this.imgs = this.imgs || $imgs;
+      for (var i = 0; i < this.imgs.length; i++) {
+        var width  = this.imgs[i].width;
+        var height = this.imgs[i].height;
+        this.imgs[i].src    = this.canvases[i][0].toDataURL();
+        this.imgs[i].onload = function() {
+          this.width  = width;
+          this.height = height;
+        };
+      }
     },
 
     isDowned: false,
@@ -72,6 +98,7 @@ var Museum = {
         self.context.stroke();
         self.context.closePath();
         self.isDowned = false;
+        self.updateThumbnails();
       });
     },
 
